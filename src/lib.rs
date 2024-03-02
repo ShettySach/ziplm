@@ -1,21 +1,22 @@
-use core::f32;
 use flate2::write::GzEncoder;
 use flate2::Compression;
 use ndarray::Array1;
-use std::io::Write;
+use std::io::{stdout, Write};
 use std::{collections::HashMap, usize};
 use weighted_rand::builder::{NewBuilder, WalkerTableBuilder};
 
 pub struct ZipModel {
-    vocabulary: Vec<String>,
+    vocabulary: Vec<char>,
     training: String,
     conversion: f64,
-    index: HashMap<String, usize>,
+    index: HashMap<char, usize>,
 }
 
 impl ZipModel {
-    pub fn new(vocabulary: Vec<String>, training: &str, conversion: f64) -> Self {
-        let index: HashMap<String, usize> = vocabulary
+    pub fn new(vocabulary: &str, training: &str, conversion: f64) -> Self {
+        let vocabulary: Vec<char> = vocabulary.chars().collect();
+        let training = training.to_string();
+        let index: HashMap<char, usize> = vocabulary
             .iter()
             .enumerate()
             .map(|(i, v)| (v.clone(), i))
@@ -23,7 +24,7 @@ impl ZipModel {
 
         ZipModel {
             vocabulary,
-            training: training.to_string(),
+            training,
             conversion,
             index,
         }
@@ -54,7 +55,7 @@ impl ZipModel {
 
     pub fn sequence_logprob(
         &self,
-        sequence: Vec<&str>,
+        sequence: Vec<char>,
         mut prefix: String,
         temperature: f64,
     ) -> f64 {
@@ -62,15 +63,15 @@ impl ZipModel {
 
         for x in sequence {
             let scores = self.log_probs(&prefix, temperature);
-            let index = *self.index.get(x).unwrap();
+            let index = *self.index.get(&x).unwrap();
             score += scores[index];
-            prefix.push_str(x);
+            prefix.push(x);
         }
 
         score
     }
 
-    pub fn sample(&self, prefix: &str, temperature: f64) -> &str {
+    pub fn sample(&self, prefix: &str, temperature: f64) -> char {
         let scores = self.log_probs(prefix, temperature);
         let p = scores.map(|&x| x.exp() as f32);
 
@@ -78,7 +79,7 @@ impl ZipModel {
         let w = b.build();
         let i = w.next();
 
-        &self.vocabulary[i]
+        self.vocabulary[i]
     }
 
     pub fn sample_sequence<'b>(
@@ -86,13 +87,19 @@ impl ZipModel {
         maxlen: usize,
         prefix: &'b str,
         temperature: f64,
-    ) -> impl Iterator<Item = String> + 'b {
-        let iterator = std::iter::successors(Some(prefix.to_string()), move |seq| {
-            let result = self.sample(seq, temperature);
-            Some(seq.to_string() + result)
-        });
+    ) -> String {
+        let mut seq = prefix.to_string();
 
-        iterator.take(maxlen)
+        for _ in 0..maxlen {
+            let result = self.sample(&seq, temperature);
+            print!("{}", result);
+            stdout().flush().unwrap();
+
+            seq.push(result);
+        }
+        println!();
+
+        seq
     }
 }
 

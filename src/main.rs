@@ -1,15 +1,10 @@
 fn main() {
-    let data = std::fs::read_to_string("data.txt").unwrap().to_lowercase();
+    let data = include_str!("../data.txt");
     let alphabet = "this is your life, and it is ending one minute at-a-time.";
     let ln256 = 2.408;
 
-    let model = ziplm::ZipModel::new(
-        alphabet.chars().map(|ch| ch.to_string()).collect(),
-        &data,
-        ln256,
-    );
+    let model = ziplm::ZipModel::new(alphabet, &data, ln256);
+    let response = model.sample_sequence(100, "", 1);
 
-    let results = model.sample_sequence(300, "the ", 0.5).collect::<Vec<_>>();
-
-    println!("{}", results.last().unwrap());
+    println!("{}", response);
 }
