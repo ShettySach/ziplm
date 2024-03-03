@@ -90,13 +90,14 @@ impl ZipModel {
     ) -> String {
         let mut seq = prefix.to_string();
 
-        for _ in 0..maxlen {
+        println!();
+        (0..maxlen).for_each(|_| {
             let result = self.sample(&seq, temperature);
             print!("{}", result);
             stdout().flush().unwrap();
 
             seq.push(result);
-        }
+        });
         println!();
 
         seq
