@@ -82,12 +82,7 @@ impl ZipModel {
         self.vocabulary[i]
     }
 
-    pub fn sample_sequence<'b>(
-        &'b self,
-        maxlen: usize,
-        prefix: &'b str,
-        temperature: f64,
-    ) -> String {
+    pub fn sample_sequence<'b>(&'b self, maxlen: u16, prefix: &'b str, temperature: f64) -> String {
         let mut seq = prefix.to_string();
 
         println!();
