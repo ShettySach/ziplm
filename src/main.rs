@@ -28,10 +28,7 @@ mod cli {
     }
 }
 
-#[cfg(feature = "cli")]
 fn main() {
+    #[cfg(feature = "cli")]
     cli::run();
 }
-
-#[cfg(not(feature = "cli"))]
-fn main() {}
