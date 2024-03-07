@@ -10,7 +10,7 @@ cargo install --git=https://github.com/ShettySach/ziplm --features=cli
 ```
 
 #### Usage
-```bash
+```
 Usage: ziplm [OPTIONS]
 
 Options:
