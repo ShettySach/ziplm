@@ -60,7 +60,7 @@ mod cli {
             None => include_str!("../data.txt").to_string(),
         };
 
-        let model = ZipModel::new(&vocab, &data, args.comp);
+        let model = ZipModel::new(&vocab, &data, args.conv);
         let _ = model.sample_sequence(args.length, &args.prefix, args.temp);
     }
 }
