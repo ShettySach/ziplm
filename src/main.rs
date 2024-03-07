@@ -32,7 +32,7 @@ mod cli {
 
         /// Conversion factor
         #[arg(short, long, default_value_t = 5.545177444479562)]
-        comp: f64,
+        conv: f64,
     }
 
     fn validate(path: &Option<PathBuf>) -> Option<String> {

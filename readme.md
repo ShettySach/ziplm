@@ -18,8 +18,8 @@ Options:
   -p, --prefix <PREFIX>  Prefix for sample generated [default: ]
   -t, --temp <TEMP>      Temperature for sample generated [default: 0.25]
   -v, --vocab <VOCAB>    Path of vocabulary data (.txt file) [Defaults to qwertyuiopasdfghjklzxcvbnm,. '"]
-  -d, --data <DATA>      Path of training data (.txt file) [Defaults to Mary Shelley's 'Frankenstein']
-  -c, --comp <COMP>      Conversion factor [default: 5.545177444479562]
+  -d, --data <DATA>      Path of training data (.txt file) [Defaults to Mary Shelley's Frankenstein]
+  -c, --conv <COMP>      Conversion factor [default: 5.545177444479562]
   -h, --help             Print help
   -V, --version          Print version
 ```
@@ -53,4 +53,4 @@ use ziplm::ZipModel
 
 ### Credits
 - [Original ziplm repo by Futrell](https://github.com/Futrell/ziplm)
-- [Frankenstein; Or, The Modern Prometheus by Mary Shelley](https://www.gutenberg.org/cache/epub/84/pg84.txt)
+- [Frankenstein; Or, The Modern Prometheus by Mary Wollstonecraft Shelley](https://www.gutenberg.org/cache/epub/84/pg84.txt)
