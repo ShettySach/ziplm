@@ -18,17 +18,21 @@ mod cli {
 
         /// Temperature for sample generated
         #[arg(short, long, default_value_t = 0.25)]
-        temperature: f64,
-
-        /// Path of training data (.txt file)
-        /// [Defaults to Mary Shelley's 'Frankenstein']
-        #[arg(short, long)]
-        data: Option<PathBuf>,
+        temp: f64,
 
         /// Path of vocabulary data (.txt file)
         /// [Defaults to qwertyuiopasdfghjklzxcvbnm,. '"]
         #[arg(short, long)]
         vocab: Option<PathBuf>,
+
+        /// Path of training data (.txt file)
+        /// [Defaults to Mary Shelley's Frankenstein]
+        #[arg(short, long)]
+        data: Option<PathBuf>,
+
+        /// Conversion factor
+        #[arg(short, long, default_value_t = 5.545177444479562)]
+        comp: f64,
     }
 
     fn validate(path: &Option<PathBuf>) -> Option<String> {
@@ -48,17 +52,16 @@ mod cli {
         let args: Args = Args::parse();
 
         let vocab = match validate(&args.vocab) {
-            Some(content) => content,
+            Some(vocab) => vocab,
             None => r#"qwertyuiopasdfghjklzxcvbnm,. '""#.to_string(),
         };
-        let data = match validate(&args.vocab) {
-            Some(content) => content,
+        let data = match validate(&args.data) {
+            Some(data) => data,
             None => include_str!("../data.txt").to_string(),
         };
-        let ln256 = 2.408;
 
-        let model = ZipModel::new(&vocab, &data, ln256);
-        let _ = model.sample_sequence(args.length, &args.prefix, args.temperature);
+        let model = ZipModel::new(&vocab, &data, args.comp);
+        let _ = model.sample_sequence(args.length, &args.prefix, args.temp);
     }
 }
 

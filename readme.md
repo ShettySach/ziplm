@@ -6,7 +6,7 @@
 
 #### Install
 ```bash
-cargo install --git=https://github.com/ShettySach/ziplm --features=cli
+cargo install --git https://github.com/ShettySach/ziplm --features cli
 ```
 
 #### Usage
@@ -14,13 +14,14 @@ cargo install --git=https://github.com/ShettySach/ziplm --features=cli
 Usage: ziplm [OPTIONS]
 
 Options:
-  -l, --length <LENGTH>            Maximum length of sample generated [default: 100]
-  -p, --prefix <PREFIX>            Prefix for sample generated [default: ]
-  -t, --temperature <TEMPERATURE>  Temperature for sample generated [default: 0.25]
-  -d, --data <DATA>                Path of training data (.txt file) [Defaults to Mary Shelley's 'Frankenstein']
-  -v, --vocab <VOCAB>              Path of vocabulary data (.txt file) [Defaults to qwertyuiopasdfghjklzxcvbnm,. '"]
-  -h, --help                       Print help
-  -V, --version                    Print version
+  -l, --length <LENGTH>  Maximum length of sample generated [default: 100]
+  -p, --prefix <PREFIX>  Prefix for sample generated [default: ]
+  -t, --temp <TEMP>      Temperature for sample generated [default: 0.25]
+  -v, --vocab <VOCAB>    Path of vocabulary data (.txt file) [Defaults to qwertyuiopasdfghjklzxcvbnm,. '"]
+  -d, --data <DATA>      Path of training data (.txt file) [Defaults to Mary Shelley's 'Frankenstein']
+  -c, --comp <COMP>      Conversion factor [default: 5.545177444479562]
+  -h, --help             Print help
+  -V, --version          Print version
 ```
 
 ### Library Instructions
@@ -37,7 +38,7 @@ use ziplm::ZipModel
  fn main() {
     let vocab = "qwertyuiopasdfghjklzxcvbnm,. '";
     let data = include_str!("../data.txt");
-    let ln256 = 2.408;
+    let ln256 = 5.545177444479562;
 
     let args: Args = Args::parse();
 
