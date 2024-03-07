@@ -14,9 +14,11 @@ cargo install --git=https://github.com/ShettySach/ziplm --features=cli
 Usage: ziplm [OPTIONS]
 
 Options:
-  -l, --length <LENGTH>            [default: 100]
-  -p, --prefix <PREFIX>            [default: ]
-  -t, --temperature <TEMPERATURE>  [default: 0.25]
+  -l, --length <LENGTH>            Maximum length of sample generated [default: 100]
+  -p, --prefix <PREFIX>            Prefix for sample generated [default: ]
+  -t, --temperature <TEMPERATURE>  Temperature for sample generated [default: 0.25]
+  -d, --data <DATA>                Path of training data (.txt file) [Defaults to Mary Shelley's 'Frankenstein']
+  -v, --vocab <VOCAB>              Path of vocabulary data (.txt file) [Defaults to qwertyuiopasdfghjklzxcvbnm,. '"]
   -h, --help                       Print help
   -V, --version                    Print version
 ```
@@ -45,7 +47,6 @@ use ziplm::ZipModel
 ```
 
 ### Todo
-- Add options to train on custom .txt file
 - Add options for other compression methods ( Currently supports only gzip )
 - Optimizations, accuracy and precision improvements
 

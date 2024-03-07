@@ -85,7 +85,6 @@ impl ZipModel {
     pub fn sample_sequence<'b>(&'b self, maxlen: u16, prefix: &'b str, temperature: f64) -> String {
         let mut seq = prefix.to_string();
 
-        println!();
         (0..maxlen).for_each(|_| {
             let result = self.sample(&seq, temperature);
             print!("{}", result);

@@ -11,4 +11,3 @@ clap = { version = "4.5.2", features = ["derive"], optional = true }
 
 [features]
 cli = ["dep:clap"]
-
