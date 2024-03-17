@@ -14,8 +14,8 @@ pub struct ZipModel {
 
 impl ZipModel {
     pub fn new(vocabulary: &str, training: &str, conversion: f64) -> Self {
-        let vocabulary: Vec<char> = vocabulary.chars().collect();
-        let training = training.to_string();
+        let vocabulary: Vec<char> = vocabulary.to_ascii_lowercase().chars().collect();
+        let training = training.to_ascii_lowercase();
         let index: HashMap<char, usize> = vocabulary
             .iter()
             .enumerate()
@@ -83,7 +83,10 @@ impl ZipModel {
     }
 
     pub fn sample_sequence<'b>(&'b self, maxlen: u16, prefix: &'b str, temperature: f64) -> String {
-        let mut seq = prefix.to_string();
+        let mut seq = prefix.to_ascii_lowercase();
+
+        print!("{}", seq);
+        stdout().flush().unwrap();
 
         (0..maxlen).for_each(|_| {
             let result = self.sample(&seq, temperature);

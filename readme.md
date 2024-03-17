@@ -28,22 +28,20 @@ Options:
 
 #### Install
 ```bash
-cargo add --git=https://github.com/ShettySach/ziplm
+cargo add --git https://github.com/ShettySach/ziplm
 ```
 
 #### Usage
 ```Rust
-use ziplm::ZipModel
+use ziplm::ZipModel;
 
- fn main() {
+fn main() {
     let vocab = "qwertyuiopasdfghjklzxcvbnm,. '";
     let data = include_str!("../data.txt");
     let ln256 = 5.545177444479562;
 
-    let args: Args = Args::parse();
-
     let model = ZipModel::new(vocab, data, ln256);
-    let _ = model.sample_sequence(args.length, &args.prefix, args.temperature);
+    let _output = model.sample_sequence(100, "", 0.25);
 }
 ```
 
